@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
-import teachers.*;                 // Replace with groupname.*;
+import bk222bh.*;                 // Replace with groupname.*;
 
 public class TestAlgorithms {
 	// Run test as a standard Java application
@@ -54,57 +54,57 @@ public class TestAlgorithms {
 	public void testTransitiveClosure() throws Exception {
 		DirectedGraph<Integer> dg = generator.getTwoParts();
 		Integer[] i = generator.getUsedItems();
-		
+
 		TransitiveClosure<Integer> tc = new MyTransitiveClosure<Integer>();
 		Map<Node<Integer>,Collection<Node<Integer>>> map = tc.computeClosure(dg);
-		
+
 		/* Compare with manual results */
 		Node<Integer> n = dg.getNodeFor(i[0]);
 		Collection<Node<Integer>> c = map.get(n);
 		Collection<Node<Integer>> r = nodes(dg,new int[]{0,1,2,3,4,5,6});
 		assertEquals(r.size(),c.size());
 		assertTrue(r.containsAll(c));
-		
+
 		n = dg.getNodeFor(i[10]);
 		c = map.get(n);
 		r = nodes(dg,new int[]{10,11,12,13,14,15,16});
 		assertEquals(r.size(),c.size());
 		assertTrue(r.containsAll(c));
-		
+
 		n = dg.getNodeFor(i[4]);
 		c = map.get(n);
 		r = nodes(dg,new int[]{1,3,4,5,6});
 		assertEquals(r.size(),c.size());
 		assertTrue(r.containsAll(c));
-		
+
 		n = dg.getNodeFor(i[13]);
 		c = map.get(n);
 		r = nodes(dg,new int[]{13,14,15,16});
 		assertEquals(r.size(),c.size());
 		assertTrue(r.containsAll(c));
-		
+
 		/* Check simple facts */
 		check_closure(dg);
-		
+
 		dg = generator.getBinaryTree(4);
 		check_closure(dg);
-    	
+
     	dg = generator.getComplete(4);
 		check_closure(dg);
-		
+
 		dg = generator.getRandom(100,0.01);
-		check_closure(dg);	
+		check_closure(dg);
 	}
 	
 	@Test
 	public void testConnectedComponents() throws Exception {
 		ConnectedComponents<Integer> mycc = new MyConnectedComponents<Integer>();
 //		Integer[] i = generator.getUsedItems();
-		
+
 		DirectedGraph<Integer> dg = generator.getDisconnected();
-		
+
 		Collection<Collection<Node<Integer>>> cc = mycc.computeComponents(dg);
-		
+
 		/* Compare with manual results */
 		assertEquals(4,cc.size());
 		Collection<Node<Integer>> r;
@@ -128,17 +128,17 @@ public class TestAlgorithms {
 			else
 				assertTrue(false);
 		}
-		
+
 		/* Check simple facts */
 		check_partitioning(dg,cc);
-		
+
 		dg = generator.getCyclic();
 		cc = mycc.computeComponents(dg);
 		assertEquals(1,cc.size());
 		Iterator<Collection<Node<Integer>>> it = cc.iterator();
 		assertEquals(12,it.next().size());
 		check_partitioning(dg,cc);
-		
+
 		dg = generator.getTwoParts();
 		cc = mycc.computeComponents(dg);
 		assertEquals(2,cc.size());
@@ -177,7 +177,7 @@ public class TestAlgorithms {
 
 		Map<Node<Integer>,Collection<Node<Integer>>> map = tc.computeClosure(dg);
 		assertEquals(map.size(),dg.nodeCount());
-		
+
 		Iterator<Node<Integer>> it = map.keySet().iterator();
 		while (it.hasNext()) {
 			Node<Integer> n = it.next();
@@ -185,7 +185,7 @@ public class TestAlgorithms {
 			if (c.size() == 0)
 				assertTrue(n.isTail());
 			assertTrue(n.outDegree()<=c.size());
-			
+
 			/* Compare with dfs */
 			Collection<Node<Integer>> r = dfs.dfs(dg,n);
 			assertTrue(r.containsAll(c));

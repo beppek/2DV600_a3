@@ -288,9 +288,9 @@ public class GraphGenerator {
 	
 	private DirectedGraph<Integer> copyOf(DirectedGraph<Integer> dg) {
 		DirectedGraph<Integer> copy = createEmptyGraph();
-		
+
 		// Add nodes
-		for (Node<Integer> n : dg) 
+		for (Node<Integer> n : dg)
 			copy.addNodeFor(n.item());
 		
 		// Add edges

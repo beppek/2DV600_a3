@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
-import teachers.*;                      // Replace with groupname.*;
+import bk222bh.*;                      // Replace with groupname.*;
 /**
  * 
  * A  weakness in this case is that many tests
@@ -69,9 +69,9 @@ public class TestDFS  {
 		Integer[] i = generator.getUsedItems();
 		Node<Integer> root1 = dg.getNodeFor(i[0]);
 		Node<Integer> root2 = dg.getNodeFor(i[10]);
-		
+
 		DFS<Integer> dfs = new MyDFS<Integer>();
-		
+
     	/* Test cyclic part with root1 */
     	List<Node<Integer>> list = dfs.dfs(dg,root1);
     	assertEquals(list.size(),7);
@@ -85,7 +85,7 @@ public class TestDFS  {
     	assertTrue(list.indexOf(dg.getNodeFor(i[3]))<list.indexOf(dg.getNodeFor(i[4])));
     	assertTrue(list.indexOf(dg.getNodeFor(i[4]))<list.indexOf(dg.getNodeFor(i[5])));
     	System.out.println("\tCyclic dfs-order[0]: "+list);
-    	
+
        	/* Test acyclic part with root2 */
     	list = dfs.dfs(dg,root2);
     	assertEquals(list.size(),7);
@@ -98,20 +98,20 @@ public class TestDFS  {
     	assertTrue(list.get(6)==dg.getNodeFor(i[11]) || list.get(6)==dg.getNodeFor(i[12]));
     	assertSame(list.get(2),dg.getNodeFor(i[13]));
     	System.out.println("\tAcyclic dfs-order[10]: "+list);
-    	
+
     	/* Test other start nodes */
     	Node<Integer> n = dg.getNodeFor(i[4]);
     	list = dfs.dfs(dg,n);
     	assertEquals(list.size(),5);
-    	
+
     	n = dg.getNodeFor(i[6]);
     	list = dfs.dfs(dg,n);
     	assertEquals(list.size(),1);
-    	
+
     	n = dg.getNodeFor(i[13]);
     	list = dfs.dfs(dg,n);
     	assertEquals(list.size(),4);
-    	
+
     	/* Test graph with two heads */
     	list = dfs.dfs(dg);
     	System.out.println("\tTwoParts dfs-order: "+list);
@@ -122,16 +122,16 @@ public class TestDFS  {
     		assertEquals(j+start,node.num);
     	}
 	}
-	
+
 	@Test
 	public void testBFS() throws Exception {
 		DirectedGraph<Integer> dg = generator.getTwoParts();
 		Integer[] i = generator.getUsedItems();
 		Node<Integer> root1 = dg.getNodeFor(i[0]);
 		Node<Integer> root2 = dg.getNodeFor(i[10]);
-		
+
 		BFS<Integer> bfs = new MyBFS<Integer>();
-		
+
     	/* Test cyclic part with root1 */
     	List<Node<Integer>> list = bfs.bfs(dg,root1);
     	assertEquals(list.size(),7);
@@ -145,7 +145,7 @@ public class TestDFS  {
     	assertTrue(list.indexOf(dg.getNodeFor(i[3]))<list.indexOf(dg.getNodeFor(i[4])));
     	assertTrue(list.indexOf(dg.getNodeFor(i[4]))<list.indexOf(dg.getNodeFor(i[5])));
     	System.out.println("\tCyclic bfs-order[0]: "+list);
-    	
+
        	/* Test acyclic part with root2 */
     	list = bfs.bfs(dg,root2);
     	assertEquals(list.size(),7);
@@ -158,20 +158,20 @@ public class TestDFS  {
     	assertTrue(list.get(6)==dg.getNodeFor(i[15]) || list.get(6)==dg.getNodeFor(i[16]));
     	assertSame(list.get(3),dg.getNodeFor(i[13]));
     	System.out.println("\tAcyclic bfs-order[10]: "+list);
-    	
+
     	/* Test other start nodes */
     	Node<Integer> n = dg.getNodeFor(i[4]);
     	list = bfs.bfs(dg,n);
     	assertEquals(list.size(),5);
-    	
+
     	n = dg.getNodeFor(i[6]);
     	list = bfs.bfs(dg,n);
     	assertEquals(list.size(),1);
-    	
+
     	n = dg.getNodeFor(i[13]);
     	list = bfs.bfs(dg,n);
     	assertEquals(list.size(),4);
-    	
+
     	/* Test graph with two heads */
     	list = bfs.bfs(dg);
     	System.out.println("\tTwoParts dfs-order: "+list);
@@ -182,7 +182,7 @@ public class TestDFS  {
     		assertEquals(j+start,node.num);
     	}
 	}
-	
+
 	@Test
     public void testPostOrder() throws Exception {
     	DirectedGraph<Integer> dg = generator.getTwoParts();
@@ -190,9 +190,9 @@ public class TestDFS  {
     	Node<Integer> root1 = dg.getNodeFor(i[0]);
     	Node<Integer> root2 = dg.getNodeFor(i[10]);
 
-    	DFS<Integer> dfs = new MyDFS<Integer>();		
+    	DFS<Integer> dfs = new MyDFS<Integer>();
 
-		
+
     	/* Test cyclic with root */
     	List<Node<Integer>> list = dfs.postOrder(dg,root1);
     	System.out.println("\tTwoParts post-order[0]: "+list);
@@ -206,7 +206,7 @@ public class TestDFS  {
     	assertTrue(list.get(5)==dg.getNodeFor(i[1]) || list.get(5)==dg.getNodeFor(i[2]));
     	assertTrue(list.get(0)==dg.getNodeFor(i[5]) || list.get(0)==dg.getNodeFor(i[6]) || list.get(0)==dg.getNodeFor(i[1]));
     	assertTrue(list.get(4)==dg.getNodeFor(i[3])  || list.get(4)==dg.getNodeFor(i[1]));
-    	
+
        	/* Test acyclic with root */
     	list = dfs.postOrder(dg,root2);
     	assertEquals(list.size(),7);
@@ -220,16 +220,16 @@ public class TestDFS  {
     	assertTrue(list.get(0)==dg.getNodeFor(i[15]) || list.get(0)==dg.getNodeFor(i[16]));
     	assertSame(list.get(3),dg.getNodeFor(i[13]));
     	System.out.println("\tAyclic post-order[10]: "+list);
-    	
+
     	/* Test other start nodes */
     	Node<Integer> n = dg.getNodeFor(i[4]);
     	list = dfs.postOrder(dg,n);
     	assertEquals(list.size(),5);
-    	
+
     	n = dg.getNodeFor(i[6]);
     	list = dfs.postOrder(dg,n);
     	assertEquals(list.size(),1);
-    	
+
     	n = dg.getNodeFor(i[13]);
     	list = dfs.postOrder(dg,n);
     	assertEquals(list.size(),4);
@@ -244,46 +244,46 @@ public class TestDFS  {
     		assertEquals(j+start,node.num);
     	}
     }
-    
+
 	@Test
     public void testCyclic() throws Exception {
     	DFS<Integer> dfs = new MyDFS<Integer>();
-    	
+
     	DirectedGraph<Integer> dg = new MyGraph<Integer>();
 
     	Integer i1 = new Integer(1);
     	dg.addNodeFor(i1);
     	assertFalse(dfs.isCyclic(dg));
-    	
+
     	Integer i2 = new Integer(2);
     	dg.addEdgeFor(i1,i2);
     	assertFalse(dfs.isCyclic(dg));
-    	
+
 
     	dg.addEdgeFor(i2,i2);
     	assertTrue(dfs.isCyclic(dg));
-    	
+
     	/* Test some pre-defined graphs */
     	dg = generator.getSmallAcyclic();
     	assertFalse(dfs.isCyclic(dg));
-    	
+
     	dg = generator.getSmallCyclic();
     	assertTrue(dfs.isCyclic(dg));
-    	
+
     	dg = generator.getTwoParts();
     	assertTrue(dfs.isCyclic(dg));
-    	
+
     	dg = generator.getBinaryTree(4);
     	assertFalse(dfs.isCyclic(dg));
-    	
+
     	dg = generator.getComplete(4);
     	assertTrue(dfs.isCyclic(dg));
-    	
+
     	/* Topological sort */
     	dg = generator.getSmallAcyclic();
     	List<Node<Integer>> sorted = dfs.topSort(dg);
     	System.out.println("\tAcyclic top-sort: "+sorted);
-    	
+
     	/* Check basic property */
     	for (Node<Integer> src : sorted) {
 			int from = sorted.indexOf(src);
@@ -292,12 +292,12 @@ public class TestDFS  {
 				Node<Integer> tgt = it.next();
 				int to = sorted.indexOf(tgt);
 				assertTrue(from <= to);
-			}		
+			}
 		}
-    	
+
     	dg = generator.getBinaryTree(4);
     	sorted = dfs.topSort(dg);
-    	
+
     	/* Check basic property */
     	for (Node<Integer> src : sorted) {
 			int from = sorted.indexOf(src);
@@ -306,7 +306,7 @@ public class TestDFS  {
 				Node<Integer> tgt = it.next();
 				int to = sorted.indexOf(tgt);
 				assertTrue(from <= to);
-			}		
+			}
 		}
     }
  

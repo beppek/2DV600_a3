@@ -8,8 +8,8 @@ import graphs.GML;
 
 import java.io.File;
 
-import teachers.MyGML;
-import teachers.MyGraph;
+import bk222bh.MyGML;
+import bk222bh.MyGraph;
 
 /**
  * A simple program to test and print graphs

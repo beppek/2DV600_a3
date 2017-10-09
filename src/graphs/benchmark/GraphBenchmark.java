@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import teachers.*;     // Replace with groupname.*
+import bk222bh.*;     // Replace with groupname.*
 
 /**
  * @author jonasl
@@ -203,10 +203,10 @@ public class GraphBenchmark {
 	/* *****************************************************
 	 *     DFS and BFS
 	 * *****************************************************/
-	
+
 	public double runDfsBfs() {
 		System.out.println("\n\tDFS and BFS Components");
-				
+
 		DFS<Integer> dfs = new MyDFS<Integer>();
 		BFS<Integer> bfs = new MyBFS<Integer>();
 		DirectedGraph<Integer>[] graphs = getConnectedGraphs();
@@ -234,7 +234,7 @@ public class GraphBenchmark {
 	    System.out.println("\tTime: "+time);
 	    return time;
 	}
-	
+
 	private DirectedGraph<Integer>[] getDBFSGraphs() {
 		int sz = 15*SIZE;
 		int esz = 100;
@@ -263,7 +263,7 @@ public class GraphBenchmark {
 	 * *****************************************************/
 	public double runTransitiveClosure() {
 		System.out.println("\n\tTransitive Closure");
-				
+
 		TransitiveClosure<Integer> tc = new MyTransitiveClosure<Integer>();
 		DirectedGraph<Integer>[] graphs = getClosureGraphs();
 		System.out.println("\t\tGarbage collection: ....  "+gcMem());
@@ -325,7 +325,7 @@ public class GraphBenchmark {
 	
 	public double runConnectedComponents() {
 		System.out.println("\n\tConnected Components");
-				
+
 		ConnectedComponents<Integer> cc = new MyConnectedComponents<Integer>();
 		DirectedGraph<Integer>[] graphs = getConnectedGraphs();
 		DirectedGraph<Integer> g;

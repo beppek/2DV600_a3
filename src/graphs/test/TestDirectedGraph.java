@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
-import teachers.*;                 // Replace with groupname.*;
+import bk222bh.*;                 // Replace with groupname.*;
 
 public class TestDirectedGraph  {
 	
