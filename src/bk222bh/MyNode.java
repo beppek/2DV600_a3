@@ -2,9 +2,7 @@ package bk222bh;
 
 import graphs.Node;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class MyNode<E> extends Node {
     private Set<Node<E>> predecessors = new HashSet<>();
@@ -21,7 +19,7 @@ public class MyNode<E> extends Node {
 
     @Override
     public boolean hasSucc(Node node) {
-        return false;
+        return successors.contains(node);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class MyNode<E> extends Node {
 
     @Override
     public boolean hasPred(Node node) {
-        return false;
+        return predecessors.contains(node);
     }
 
     @Override
@@ -71,6 +69,27 @@ public class MyNode<E> extends Node {
 
     @Override
     protected void disconnect() {
-
+        if (!this.isHead()) {
+            List<MyNode> predecessors = new ArrayList<>(this.inDegree());
+            Iterator predsIt = this.predsOf();
+            while (predsIt.hasNext()) {
+                predecessors.add((MyNode) predsIt.next());
+            }
+            for (MyNode pred : predecessors) {
+                this.removePred(pred);
+                pred.removeSucc(this);
+            }
+        }
+        if (!this.isTail()) {
+            List<MyNode> successors = new ArrayList<>(this.outDegree());
+            Iterator succsIt = this.succsOf();
+            while (succsIt.hasNext()) {
+                successors.add((MyNode) succsIt.next());
+            }
+            for (MyNode succs : successors) {
+                this.removeSucc(succs);
+                succs.removePred(this);
+            }
+        }
     }
 }
