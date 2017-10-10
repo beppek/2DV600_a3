@@ -6,7 +6,6 @@ import graphs.Node;
 import java.util.*;
 
 public class MyGraph<E> implements DirectedGraph {
-    private List<Node<E>> nodes = new LinkedList<>();
     private Map<E, MyNode<E>> nodeMap = new HashMap<>();
     private Set<Node<E>> heads = new HashSet<>();
     private Set<Node<E>> tails = new HashSet<>();
@@ -20,11 +19,13 @@ public class MyGraph<E> implements DirectedGraph {
         if (item == null) {
             throw new RuntimeException("Item can not be null");
         }
-        if (nodeMap.containsValue(item)) {
+        if (nodeMap.containsKey((E)item)) {
             return nodeMap.get(item);
         } else {
-            Node newNode = new MyNode(item);
-            nodes.add(newNode);
+            MyNode newNode = new MyNode(item);
+            nodeMap.put((E)item,newNode);
+            heads.add(newNode);
+            tails.add(newNode);
             return newNode;
         }
     }
@@ -33,10 +34,11 @@ public class MyGraph<E> implements DirectedGraph {
     public Node getNodeFor(Object item) {
         if (item == null) {
             throw new RuntimeException("Item can not be null");
-        } else if (!nodes.contains(item)) {
+        } else if (!nodeMap.containsKey((E)item)) {
             throw new RuntimeException("Item doesn't exist");
         }
-        return null;
+        MyNode<E> node = nodeMap.get(item);
+        return node;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class MyGraph<E> implements DirectedGraph {
 
             tails.remove(src);
             heads.remove(tgt);
+
             return true;
         }
     }
@@ -63,17 +66,17 @@ public class MyGraph<E> implements DirectedGraph {
         if (item == null) {
             throw new RuntimeException("Item can't be null");
         }
-        return false;
+        return nodeMap.get(item) != null;
     }
 
     @Override
     public int nodeCount() {
-        return 0;
+        return nodeMap.size();
     }
 
     @Override
     public Iterator<Node<E>> iterator() {
-        return nodes.iterator();
+        return new NodeIterator();
     }
 
     @Override
@@ -98,19 +101,27 @@ public class MyGraph<E> implements DirectedGraph {
 
     @Override
     public List allItems() {
-        return null;
+        List<E> allItems = new ArrayList<E>(nodeMap.keySet());
+        return allItems;
     }
 
     @Override
     public int edgeCount() {
-        return 0;
+        int edgeCount = 0;
+        for(MyNode<E> node : nodeMap.values()) {
+            edgeCount += node.inDegree();
+        }
+        return edgeCount;
     }
 
     @Override
     public void removeNodeFor(Object item) {
-        if (item == null || !nodes.contains(item)) {
+        if (item == null || !nodeMap.containsKey(item)) {
             throw new RuntimeException("Item can't be null");
         }
+        MyNode node = nodeMap.get(item);
+        node.disconnect();
+        nodeMap.remove(item);
     }
 
     @Override
@@ -118,7 +129,13 @@ public class MyGraph<E> implements DirectedGraph {
         if (from == null || to == null) {
             throw new RuntimeException("To and from can't be null");
         }
-        return false;
+        if (!containsNodeFor(from) || !containsNodeFor(to)) {
+            return false;
+        }
+        MyNode<E> src = (MyNode<E>) addNodeFor(from);
+        MyNode<E> tgt = (MyNode<E>) addNodeFor(to);
+
+        return src.hasSucc(tgt);
     }
 
     @Override
@@ -126,6 +143,48 @@ public class MyGraph<E> implements DirectedGraph {
         if (from == null || to == null ) {
             throw new RuntimeException("To and from can't be null");
         }
-        return false;
+
+        if (!containsNodeFor(from) || !containsNodeFor(to)) {
+            return false;
+        }
+        MyNode<E> src = (MyNode<E>) addNodeFor(from);
+        MyNode<E> tgt = (MyNode<E>) addNodeFor(to);
+        if (!src.hasSucc(tgt)) {
+            return false;
+        } else {
+            src.removeSucc(tgt);
+            tgt.removePred(src);
+
+            if (src.outDegree() == 0) {
+                tails.add(src);
+            }
+            if (tgt.inDegree() == 0) {
+                heads.add(tgt);
+            }
+
+            return true;
+        }
+    }
+
+    /**
+     * Private inner class used by iterator()
+     * */
+    class NodeIterator implements Iterator<Node<E>> {
+        private Iterator it = nodeMap.entrySet().iterator();
+
+        @Override
+        public boolean hasNext() {
+            return it.hasNext();
+        }
+
+        @Override
+        public Node next() {
+            if (!hasNext()) {
+                throw new IndexOutOfBoundsException();
+            }
+            Map.Entry entry = (Map.Entry)it.next();
+            Node<E> node = (Node<E>) entry.getValue();
+            return node;
+        }
     }
 }
