@@ -6,12 +6,14 @@ import graphs.Node;
 import java.util.*;
 
 public class MyGraph<E> implements DirectedGraph {
-    private Map<E, MyNode<E>> nodeMap = new HashMap<>();
-    private Set<Node<E>> heads = new HashSet<>();
-    private Set<Node<E>> tails = new HashSet<>();
+    private Map<E, MyNode<E>> nodeMap;
+    private Set<Node<E>> heads;
+    private Set<Node<E>> tails;
 
     public MyGraph() {
-
+        nodeMap = new HashMap<>();
+        heads = new HashSet<>();
+        tails = new HashSet<>();
     }
 
     @Override
