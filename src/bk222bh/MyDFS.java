@@ -14,12 +14,14 @@ public class MyDFS<E> implements DFS {
     @Override
     public List<Node<E>> dfs(DirectedGraph graph, Node root) {
         nodes = new ArrayList<>();
+        visited = new HashSet<>();
         nodes.add(root);
+        visited.add(root);
         root.num = dfsNum++;
         Iterator<Node<E>> it = root.succsOf();
         while (it.hasNext()) {
             Node next = it.next();
-            if (!nodes.contains(next)) {
+            if (!visited.contains(next)) {
                 dfs(next);
             }
         }
@@ -29,10 +31,11 @@ public class MyDFS<E> implements DFS {
     @Override
     public List<Node<E>> dfs(DirectedGraph graph) {
         nodes = new ArrayList<>();
+        visited = new HashSet<>();
         Iterator<Node<E>> it = graph.iterator();
         while (it.hasNext()) {
             Node node = it.next();
-            if (!nodes.contains(node)) {
+            if (!visited.contains(node)) {
                 dfs(node);
             }
         }
@@ -70,6 +73,7 @@ public class MyDFS<E> implements DFS {
         return nodes;
     }
 
+    //TODO: implement
     @Override
     public List<Node> postOrder(DirectedGraph g, boolean attach_dfs_number) {
         return null;
@@ -90,6 +94,10 @@ public class MyDFS<E> implements DFS {
         return false;
     }
 
+    /**
+     * Topological sort
+     * Achieved by reversing the order of the post order sort
+     * */
     @Override
     public List<Node<E>> topSort(DirectedGraph graph) {
         List<Node<E>> nodes = postOrder(graph);
@@ -97,20 +105,31 @@ public class MyDFS<E> implements DFS {
         return nodes;
     }
 
+    /**
+     * Private helper method to avoid duplicate code
+     * Goes through each node of the depth first search using recursive approach
+     * @param node - Node to check for outgoing edges
+     * */
     private void dfs(Node<E> node) {
 
         node.num = dfsNum++;
         nodes.add(node);
+        visited.add(node);
         Iterator<Node<E>> it = node.succsOf();
         while (it.hasNext()) {
             Node<E> next = it.next();
-            if (!nodes.contains(next)) {
+            if (!visited.contains(next)) {
                 dfs(next);
             }
         }
 
     }
 
+    /**
+     * Private helper method for postOrder methods
+     * Adds each node in post order using recursive approach
+     * @param node - Node to check for outgoing edges
+     * */
     private void postOrder(Node<E> node) {
 
         visited.add(node);
