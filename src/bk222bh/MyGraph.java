@@ -103,7 +103,7 @@ public class MyGraph<E> implements DirectedGraph {
 
     @Override
     public List allItems() {
-        List<E> allItems = new ArrayList<E>(nodeMap.keySet());
+        List<E> allItems = new ArrayList<>(nodeMap.keySet());
         return allItems;
     }
 
