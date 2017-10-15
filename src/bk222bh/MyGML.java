@@ -5,11 +5,17 @@ import graphs.GML;
 
 import java.util.Iterator;
 
+/**
+ * Class to generate GML for a given graph
+ * */
 public class MyGML<E> extends GML<E> {
     public MyGML(DirectedGraph<E> dg) {
         super(dg);
     }
 
+    /**
+     * Creates a string representation of the given graph
+     * */
     @Override
     public String toGML() {
         StringBuilder nodeSb = new StringBuilder();

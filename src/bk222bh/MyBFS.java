@@ -6,12 +6,19 @@ import graphs.Node;
 
 import java.util.*;
 
+/**
+ * Class to make breadth first search on a directed graph
+ * */
 public class MyBFS<E> implements BFS {
+
     private int bfsNum;
     private List<Node<E>> nodes;
     private List<Node<E>> breadth;
     private Set<Node<E>> visited;
 
+    /**
+     * Method that initiates the breadth first search from a given root node
+     * */
     @Override
     public List<Node<E>> bfs(DirectedGraph graph, Node root) {
         bfsNum = 1;
@@ -28,6 +35,9 @@ public class MyBFS<E> implements BFS {
         return nodes;
     }
 
+    /**
+     * Method to do a breadth first search over an entire graph
+     * */
     @Override
     public List<Node<E>> bfs(DirectedGraph graph) {
         bfsNum = 1;

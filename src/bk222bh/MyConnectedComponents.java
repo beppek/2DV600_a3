@@ -6,10 +6,18 @@ import graphs.Node;
 
 import java.util.*;
 
+/**
+ * Class to compute the connected components of a directed graph
+ * */
 public class MyConnectedComponents<E> implements ConnectedComponents {
     private Set<Node<E>> nodes;
     private Set<Node<E>> visited;
 
+    /**
+     * Computes the connected components of the given graph dg
+     * Iterates over all nodes in the graph and returns a collection of collections of all connected components
+     * @return Collection of Collections of Nodes that are within the same connected closure
+     * */
     @Override
     public Collection<Collection<Node<E>>> computeComponents(DirectedGraph dg) {
         Collection<Collection<Node<E>>> partitions = new HashSet<>();
@@ -30,7 +38,7 @@ public class MyConnectedComponents<E> implements ConnectedComponents {
 
     /**
      * Private helper method to find all connected components.
-     * Acheived by doing a depth first search.
+     * Achieved by doing a depth first search.
      * The dfs treats the graph like undirected to cover all reachable nodes.
      * This is done by checking both inbound and outbound connections of the node.
      * @param node - Node to check for all incoming and outgoing connections
